@@ -1,0 +1,16 @@
+
+
+<form class="course-list"  method="post">
+  <p>
+    <label>List Of Courses</label>
+    <select id = "courseList" name="courseList">
+      {% for name in names %}
+        <option value = "{{forloop.counter0}}">{{name}}</option>
+      {% endfor %}
+    </select>
+
+  </p>
+  <br>
+  <button type="submit">Get Grades</button>
+
+</form>
