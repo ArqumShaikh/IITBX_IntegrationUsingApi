@@ -4,6 +4,7 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
+from django.http import Http404
 
 # Create your views here.
 def _url(path):
@@ -30,7 +31,7 @@ def grades_view(request):
     courses = requests.get(_url('/get_course'))
     unique_keys=[]
     names=[]
-    # print(courses.json())
+    print(courses.json())
     courses = courses.json()
     for course in courses:
         # if course['display_name'] not in names:
@@ -46,5 +47,10 @@ def grades_view(request):
         # print(type(index))
         # print(unique_keys[index])
         index = int(index)
-        return HttpResponse(requests.get(_url1('/api/grade/v0/grades/'+unique_keys[index])))
+        print(unique_keys[index])
+        try :
+            obj = requests.get(_url1('/api/grade/v0/grades/'+unique_keys[index]))
+            return HttpResponse(obj)
+        except :
+            raise Http404
     return render(request,'grade_course_list.html',{'names':names})
