@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import requests
-from .forms import platform_form, course_form
+from .forms import platform_form, course_form, CourseImport
 import datetime
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -114,6 +114,60 @@ def post_platform_form(request):
                           "form_name":"platform"
                           })
         
-    
 
 
+
+
+
+def getCourseImport(request):
+    '''
+    Function to render empty django form in form.html
+    '''
+    form = CourseImport()
+    return render(request, 'course_import.html', {
+            "form":form,
+            "form_name":"postCourseImport"  
+        })
+
+
+
+
+
+
+def postCourseImport(request):
+    '''
+    Function to handle a post request coming from form.html
+    '''
+    if request.method == 'POST':
+        form = CourseImport(request.POST)
+
+        if form.is_valid():
+            print("FORM IS VALID")
+            form_data = form.cleaned_data#retrieve form content 
+
+            #def convert_timestamp(item_date_object):
+                #Function to convert datetime entries from django format to json iso format
+                #if isinstance(item_date_object, (datetime.date, datetime.datetime)):
+                    #return item_date_object.isoformat()
+
+            #json_data = json.loads(json_data)#loads() converts string to json format
+            
+            resp = requests.post('http://127.0.0.1:8000/repo/', json=form_data)#http://10.105.24.250:8000/get_course/
+            #json_data in json format is passed on to backend get_platform API
+            if resp.status_code != 201:
+                raise ApiError(resp.status_code)
+            print('\n\nCreated task. ID: {}\n\n'.format(resp.json()["id"]))#resp consists the tuple which was just added
+
+            return render(request, 'result.html',
+                {"done":True, 
+                "form_name":"postCourseImport"
+                })
+            
+        else:
+            #condition when post is unsuccessfull, and/or form is invalid
+            print("FORM IS NOT VALID")
+            return render(request, 'result.html', 
+                          {'form': form ,
+                          'done':False,
+                          "form_name":"postCourseImport"
+                          })

@@ -28,6 +28,18 @@
 
     <a href="/get_course_form">Create Another Course</a>
     <br>
+
+{% elif form_name == "postCourseImport" %}
+
+    {% if done is True %}
+    <h1>Congratulations! You have successfully cloned a repository </h1>
+    {% else %}
+    <h1>Cloning Failed :( </h1>
+    <br>
+    {% endif %}
+
+    <a href="/getCourseImport">Clone Another Repo</a>
+    <br>
     
 {% endif %}
 

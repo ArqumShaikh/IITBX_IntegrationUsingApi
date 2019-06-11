@@ -110,3 +110,24 @@ class course_form(forms.Form):
     updated = forms.DateTimeField(initial="2006-11-25 14:30:59")
     #created = forms.DateTimeField(auto_now=True)
     #updated = forms.DateTimeField(auto_now_add=True)    
+
+
+
+
+
+
+
+class CourseImport(forms.Form):
+    """
+    Form for collecting basic information about an external learning platforms.
+
+    This model contains basic platform metadata such as an ID, name,
+    URL, and any other information that would be necessary to
+    a courses as part of there system.
+    """
+
+    # Git_URL to clone
+    url = forms.CharField(required=True)
+    # Directory in which file is to be cloned
+    directory = forms.CharField(required=True)
+   

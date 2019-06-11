@@ -31,10 +31,8 @@ import os.path
 from git import *
 import git, os
 from urllib.parse import urlparse
-# Create your views here
 
 class repolist(APIView):
-   
     def get(self, request):
         repolist = repoclone.objects.all()
         serializer = repocloneSerializer(repolist, many = True)
