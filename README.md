@@ -7,6 +7,9 @@ Prerequisites:
 -pip install mysqlclient
 -create a user which has access to iitbxapi database
 
+Control Section - Client Django App
+IITBX_API - Contains all the apis
+
 Adding Environment Variable
 -go to ~/.bashrc and add export "var_name"="value" and in the file import os and use os.environ.get("var_name")
 
